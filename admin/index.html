@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>胡桃资源站 - 后台管理</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+</head>
+<body class="admin-page">
+    <nav class="admin-nav">
+        <div class="nav-brand">胡桃资源站管理后台</div>
+        <div class="nav-user">
+            <span id="currentUser"></span>
+            <button type="button" onclick="handleLogout()">退出登录</button>
+        </div>
+    </nav>
 
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul class="menu">
+                <li class="active" data-page="dashboard">控制台</li>
+                <li data-page="projects">项目管理</li>
+                <li data-page="about">关于我管理</li>
+                <li data-page="settings">网站设置</li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <!-- 控制台页面 -->
+            <div id="dashboard" class="page active">
+                <h2>控制台</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>总访问量</h3>
+                        <p id="totalVisits">0</p>
+                        <small>累计访问次数</small>
+                    </div>
+                    <div class="stat-card">
+                        <h3>今日访问</h3>
+                        <p id="todayVisits">0</p>
+                        <small>今日访问人次</small>
+                    </div>
+                    <div class="stat-card">
+                        <h3>项目总数</h3>
+                        <p id="projectCount">0</p>
+                        <small>已发布项目数量</small>
+                    </div>
+                    <div class="stat-card">
+                        <h3>平均停留</h3>
+                        <p id="avgStayTime">0分钟</p>
+                        <small>平均访问时长</small>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts">
+                    <div class="chart-container">
+                        <h3>访问趋势</h3>
+                        <canvas id="visitsChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>访问时段分布</h3>
+                        <canvas id="timeDistChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="visit-details">
+                    <h3>最近访问记录</h3>
+                    <div class="table-container">
+                        <table id="visitTable">
+                            <thead>
+                                <tr>
+                                    <th>访问时间</th>
+                                    <th>停留时长</th>
+                                    <th>访问页面</th>
+                                    <th>来源</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 访问记录将通过JavaScript动态加载 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目管理页面 -->
+            <div id="projects" class="page">
+                <h2>项目管理</h2>
+                <button type="button" class="add-btn" onclick="showAddProjectModal()">添加项目</button>
+                <div class="project-list">
+                    <!-- 项目列表将通过JavaScript动态加载 -->
+                </div>
+            </div>
+
+            <!-- 关于我管理页面 -->
+            <div id="about" class="page">
+                <h2>关于我管理</h2>
+                <div class="about-editor">
+                    <textarea id="aboutContent" rows="10"></textarea>
+                    <button type="button" onclick="saveAbout()">保存</button>
+                </div>
+            </div>
+
+            <!-- 网站设置页面 -->
+            <div id="settings" class="page">
+                <h2>网站设置</h2>
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label>网站标题</label>
+                        <input type="text" id="siteTitle">
+                    </div>
+                    <div class="form-group">
+                        <label>主题颜色</label>
+                        <input type="color" id="themeColor">
+                    </div>
+                    <button type="button" onclick="saveSettings()">保存设置</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 添加项目模态框 -->
+    <div id="addProjectModal" class="modal">
+        <div class="modal-content">
+            <h3>添加项目</h3>
+            <form id="addProjectForm">
+                <div class="form-group">
+                    <label>项目名称</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label>项目描述</label>
+                    <textarea name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>项目图片</label>
+                    <input type="file" name="image" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label>项目链接</label>
+                    <input type="url" name="link" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit">保存</button>
+                    <button type="button" onclick="closeModal()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html> 
